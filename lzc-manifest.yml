@@ -1,0 +1,27 @@
+application:
+  subdomain: dopplertask
+  background_task: true
+  upstreams:
+    - location: /
+      backend: http://dopplertask:8090/
+  health_check:
+    test_url: http://dopplertask:8090/health
+    timeout: 10s
+    start_period: 120s
+services:
+  dopplertask:
+    # upstream: docker.io/dopplertask/dopplertask:0.15.0
+    image: docker.1ms.run/dopplertask/dopplertask:0.15.0
+    environment:
+      - DOPPLERTASK_ENCRYPTION_KEY={{ stable_secret "dopplertask_encryption_key" }}
+      - DOPPLERTASK_PERSON_TOKEN={{ stable_secret "dopplertask_person_token" }}
+      - DOPPLERTASK_PUBLIC_URL=https://{{ .S.AppDomain }}
+    binds:
+      - /lzcapp/var/data:/root
+    mem_limit: 1g
+usage: |
+  DopplerTask 是开源自动化平台（81 个现成步骤，支持 MCP 供 AI 智能体起草工作流，人工审批后运行），可执行本机命令、SSH、浏览器操作等，仅应授权可信管理员使用（应用已设为管理员入口 admin_only）。
+  访问口令（Person Token）：{{ stable_secret "dopplertask_person_token" }}——打开应用时在提示处输入即可；也可把该值填进你的 AI 智能体的 DOPPLERTASK_TOKEN 让它连 MCP（MCP 地址：应用域名 /mcp）。
+  凭据加密密钥由平台稳定生成（DOPPLERTASK_ENCRYPTION_KEY）；迁移到其他微服时需同时迁移原密钥，否则已存凭据无法解密。
+  数据（H2 数据库、加密密钥）持久化在应用数据目录；升级由打包仓库 GitHub Actions 跟随上游自动进行，请勿在应用内自更新。
+  应用触发器（webhook 回调）通过 DOPPLERTASK_PUBLIC_URL 指向应用自身的懒猫域名。

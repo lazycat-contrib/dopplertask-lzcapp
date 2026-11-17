@@ -1,0 +1,40 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/application.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: dopplertask
+
+build:
+  toolchains: []
+  run_buildscript: false
+
+images:
+  - id: dopplertask
+    target: service
+    service: dopplertask
+    source: docker.io/dopplertask/dopplertask
+    channel: stable
+    sort: semver
+    tag_regex: '^[0-9]+\.[0-9]+\.[0-9]+$'
+    delivery:
+      mode: mirror
+      require_digest_match: true
+
+stores:
+  official:
+    enabled: false
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: DopplerTask
+    summary: 面向 AI 智能体的开源自动化控制层：智能体从 81 个现成步骤起草工作流，人工审批每次变更，每次运行都有记录。支持 MCP，凭据加密存储（MIT）。

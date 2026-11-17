@@ -1,0 +1,26 @@
+package: community.lazycat.app.dopplertask
+version: 0.15.0
+name: DopplerTask
+description: "Open-source automation control layer for AI agents: agents draft workflows from 81 ready steps (Slack, Jira, Stripe, Claude and more), people approve each change, and every run is on record. MIT-licensed Java app with MCP support and encrypted credentials."
+min_os_version: 1.5.0
+homepage: https://github.com/dopplertask/dopplertask
+author: dopplertask
+license: MIT
+admin_only: true
+unsupported_platforms:
+  - ios
+  - android
+  - tvos
+locales:
+  zh:
+    name: "DopplerTask"
+    description: "面向 AI 智能体的开源自动化控制层：智能体从 81 个现成步骤（Slack、Jira、Stripe、Claude 等）起草工作流，人工审批每次变更，每次运行都有记录。支持 MCP，凭据加密存储（MIT）。"
+  zh_CN:
+    name: "DopplerTask"
+    description: "面向 AI 智能体的开源自动化控制层：智能体从 81 个现成步骤（Slack、Jira、Stripe、Claude 等）起草工作流，人工审批每次变更，每次运行都有记录。支持 MCP，凭据加密存储（MIT）。"
+  en:
+    name: "DopplerTask"
+    description: "Open-source automation control layer for AI agents: agents draft workflows from 81 ready steps (Slack, Jira, Stripe, Claude and more), people approve each change, and every run is on record. MCP support, encrypted credentials (MIT)."
+permissions:
+  required:
+    - net.internet
